@@ -1,17 +1,19 @@
 const Sequelize = require('sequelize');
 const connection = require('../pgConnection');
-// const User = require('./userModel');
 
-const Question = connection.define('questions', {
+const QuestionStatus = connection.define('question_status', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
+  },
+  name: {
+    type: Sequelize.STRING,
     allowNull: false,
   },
-  question: {
+  description: {
     type: Sequelize.STRING,
     allowNull: false,
   },
 });
 
-module.exports = Question;
+module.exports = QuestionStatus;
