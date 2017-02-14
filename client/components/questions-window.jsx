@@ -4,7 +4,29 @@ import MyQuestion from './my-question.jsx';
 import NewQuestion from './new-question.jsx';
 
 export default class QuestionWindow extends React.Component {
-    render() {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const questions = [];
+    this.props.getQuestions().then(() => {
+      console.log('INSIDE PROMISE');
+      console.log(this.props.state);      
+    });
+
+
+
+    return (
+      <div className="row">
+        <div className="col-lg-4">
+          OPENED
+          {questions}
+        </div>
+      </div>
+    );
+  }
+    /*render() {
         const questions = [];
         for (var key in this.props.questions) {
             if (this.props.userName === this.props.questions[key].userName) {
@@ -45,5 +67,5 @@ export default class QuestionWindow extends React.Component {
             </div>
           </div>
         )
-    }
+    }*/
 }

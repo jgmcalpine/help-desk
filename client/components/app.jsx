@@ -1,7 +1,7 @@
 import React from 'react';
 import Login from './login.jsx';
 import Signup from './signup.jsx';
-import MainPage from './main-page.jsx';
+import Dashboard from './dashboard.jsx';
 import $ from 'jquery';
 import {
   Router,
@@ -15,13 +15,13 @@ export default class App extends React.Component {
     super();
     this.state = {
       userName: 'miketyson001',
-      questions: {},
+      questions: [],
       selectedQuestionId: '',
       selectedQuestionChat: [],
       chatInput: '',
       newQuestionInput: '',
     };
-    this.gitHubLogin = this.gitHubLogin.bind(this);
+    // this.gitHubLogin = this.gitHubLogin.bind(this);
     this.getQuestions = this.getQuestions.bind(this);
     this.getMessages = this.getMessages.bind(this);
     this.setSelectedQuestionChat = this.setSelectedQuestionChat.bind(this);
@@ -34,25 +34,22 @@ export default class App extends React.Component {
   }
 
   handleSignUp (event) {
-      event.preventDefault();
-      const username = event.target.username.value;
-      const password = event.target.password.value;
-      $.ajax({
-        url: '/signup/',
-        type: 'POST',
-        data: JSON.stringify({username, password}),
-        contentType: "application/json; charset=utf-8",
-        success: (data) => {
-            console.log(data);
-            console.log(typeof data);
-            if(data.status === 'success') {
-              this.setState({userName: data.username})
-
-              browserHistory.push('/main_page');
-            }
+    event.preventDefault();
+    const username = event.target.username.value;
+    const password = event.target.password.value;
+    $.ajax({
+      url: '/signup/',
+      type: 'POST',
+      data: JSON.stringify({username, password}),
+      contentType: "application/json; charset=utf-8",
+      success: (data) => {
+        if (data.status === 'success') {
+          this.setState({userName: data.username})
+          browserHistory.push('/main_page');  
         }
-      });
-     };
+      }
+    });
+  };
 
   handleLogIn(event) {
     event.preventDefault();
@@ -66,14 +63,14 @@ export default class App extends React.Component {
       success: (data) => {
         if (data.status === 'success') {
           this.setState({userName: data.username});
-          browserHistory.push('/main_page');
+          browserHistory.push('/dashboard');
         }
       }
     })
   };
 
   getQuestions() {
-    $.get('/questions', (response) => {
+    return $.get('/questions', (response) => {
       const newState = { questions: {} };
       response.forEach((question) => {
         newState.questions[question.id] = {
@@ -87,6 +84,7 @@ export default class App extends React.Component {
       this.setState(newState);
     });
   }
+
   getMessages() {
     $.get('/messages', (res) => {
       const temp = this.state.questions;
@@ -105,6 +103,7 @@ export default class App extends React.Component {
       });
     });
   }
+
   postMessage(id, e) {
     e.preventDefault();
     $.post('/messages', {
@@ -117,14 +116,17 @@ export default class App extends React.Component {
     });
     this.setState({ chatInput: '' })
   }
+
   newQuestionInputHandler(e) {
     e.preventDefault();
     this.setState({ newQuestionInput: e.target.value });
   }
+
   chatInputHandler(e) {
     e.preventDefault();
     this.setState({ chatInput: e.target.value });
   }
+
   setSelectedQuestionChat(id) {
     if (id) {
       this.setState({
@@ -133,34 +135,33 @@ export default class App extends React.Component {
       });
     }
   }
+
   postNewQuestion(e) {
     e.preventDefault();
     $.post('/questions', {
       asker: this.state.userName,
       question: this.state.newQuestionInput,
     }, (response) => {
-      console.log(response);
       this.getQuestions();
     });
-    this.setState({ newQuestionInput: '' })
-  }
-  gitHubLogin() {
-    $.get('/auth/github', (response) => {
-      console.log(response);
-      browserHistory.push('/main_page');
-    });
-  }
+    this.setState({ newQuestionInput: '' });
+  };
+  
+  // gitHubLogin() {
+  //   $.get('/auth/github', (response) => {
+  //     browserHistory.push('/main_page');
+  //   });
+  // }
 
   render() {
     return (
       <Router history={browserHistory}>
         <Route path="/" component={() => <Login handleLogIn = {this.handleLogIn} />} />
         <Route path="/signup" component={() => <Signup handleSignUp = {this.handleSignUp} />} />
-        <Route path="/main_page" component={() => <MainPage
-          questions={this.state.questions}
+        <Route path="/dashboard" component={() => <Dashboard
+          mainState={this.state}
           getQuestions={this.getQuestions}
           getMessages={this.getMessages}
-          userName={this.state.userName}
           chatMessages={this.state.selectedQuestionChat}
           setSelectedQuestionChat={this.setSelectedQuestionChat}
           selectedQuestionId={this.state.selectedQuestionId}
