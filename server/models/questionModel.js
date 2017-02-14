@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const connection = require('../pgConnection');
+// const User = require('./userModel');
 
 const Question = connection.define('questions', {
   question: {

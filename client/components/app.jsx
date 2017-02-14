@@ -35,9 +35,8 @@ export default class App extends React.Component {
 
   handleSignUp (event) {
       event.preventDefault();
-      var username = document.signUp.username.value
-      var password = document.signUp.password.value
-      //alert(form.elements[0]['username'].value);
+      const username = event.target.username.value;
+      const password = event.target.password.value;
       $.ajax({
         url: '/signup/',
         type: 'POST',
@@ -53,28 +52,25 @@ export default class App extends React.Component {
             }
         }
       });
-
      };
 
-  handleLogIn (event) {
-        event.preventDefault();
-        var username = document.logIn.username.value
-        var password = document.logIn.password.value
-        $.ajax({
-          url: '/login/',
-          type: 'POST',
-          data: JSON.stringify({username, password}),
-          contentType: "application/json; charset=utf-8",
-          success: (data) => {
-              if(data.status === 'success') {
-                this.setState({userName: data.username})
-
-                browserHistory.push('/main_page');
-              }
-          }
-        })
-
-      };
+  handleLogIn(event) {
+    event.preventDefault();
+    const username = event.target.username.value;
+    const password = event.target.password.value;
+    $.ajax({
+      url: '/login/',
+      type: 'POST',
+      data: JSON.stringify({username, password}),
+      contentType: "application/json; charset=utf-8",
+      success: (data) => {
+        if (data.status === 'success') {
+          this.setState({userName: data.username});
+          browserHistory.push('/main_page');
+        }
+      }
+    })
+  };
 
   getQuestions() {
     $.get('/questions', (response) => {

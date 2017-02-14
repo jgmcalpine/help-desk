@@ -1,22 +1,40 @@
-
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const request = require('request')
+const request = require('request');
 const api = require('./../config.js');
 const qs = require('querystring');
-const github = api.github;
 const userCtrl = require('./controllers/userController.js');
 const questionCtrl = require('./controllers/questionController.js');
 const messageCtrl = require('./controllers/messageController.js');
 
+const github = api.github;
 const app = express();
+
+
+if (process.env.NODE_ENV === 'development') {
+  console.log('DEVELOPMENT MODE'); 
+  console.log('WILL HOT RELOAD CHANGES');
+  const webpack = require('webpack');
+  const webpackConfig = require('../webpack.config');
+  const compiler = webpack(webpackConfig);
+
+  app.use(require('webpack-dev-middleware')(compiler, {
+    hot: true,
+    publicPath: webpackConfig.output.publicPath,
+    // noInfo: true,
+  }));
+
+  app.use(require('webpack-hot-middleware')(compiler));
+}
+
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '..')));
+app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 
 app.get('/users', userCtrl.getUsers);
 app.get('/questions', questionCtrl.getQuestions);
