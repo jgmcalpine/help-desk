@@ -1,14 +1,15 @@
 const path = require('path');
-// const webpack = require('webpack');
+const webpack = require('webpack');
 
 module.exports = {
     entry: [
-        './client/index.js'
+        'webpack-hot-middleware/client?reload=true',
+        path.join(__dirname, 'client', 'index.js'),
     ],
     output: {
-        path: path.join(__dirname, 'dist'),
-        //publicPath:path.join(__dirname, 'dist'),
-        filename: 'bundle.js'
+        path: path.join(__dirname, 'client/dist'),
+        publicPath: '/',
+        filename: 'bundle.js',
     },
     module: {
         loaders: [
@@ -18,6 +19,13 @@ module.exports = {
                 loaders: ['babel-loader?{"presets":["es2015","react"]}']
             }
         ]
-    }
+    },
+    stats: {
+        colors: true,
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
+    ],
 }
 
