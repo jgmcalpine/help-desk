@@ -15,7 +15,7 @@ export default class App extends React.Component {
     super();
     this.state = {
       userName: 'miketyson001',
-      questions: {},
+      questions: [],
       selectedQuestionId: '',
       selectedQuestionChat: [],
       chatInput: '',
@@ -70,7 +70,7 @@ export default class App extends React.Component {
   };
 
   getQuestions() {
-    $.get('/questions', (response) => {
+    return $.get('/questions', (response) => {
       const newState = { questions: {} };
       response.forEach((question) => {
         newState.questions[question.id] = {
@@ -159,10 +159,9 @@ export default class App extends React.Component {
         <Route path="/" component={() => <Login handleLogIn = {this.handleLogIn} />} />
         <Route path="/signup" component={() => <Signup handleSignUp = {this.handleSignUp} />} />
         <Route path="/dashboard" component={() => <Dashboard
-          questions={this.state.questions}
+          mainState={this.state}
           getQuestions={this.getQuestions}
           getMessages={this.getMessages}
-          userName={this.state.userName}
           chatMessages={this.state.selectedQuestionChat}
           setSelectedQuestionChat={this.setSelectedQuestionChat}
           selectedQuestionId={this.state.selectedQuestionId}

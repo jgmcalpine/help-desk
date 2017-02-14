@@ -21,7 +21,7 @@ export default class Dashboard extends React.Component {
                     newQuestionInputHandler={this.props.newQuestionInputHandler}
                     newQuestionInput={this.props.newQuestionInput}
                 />
-                <ImageWindow />
+                {/*<ImageWindow />*/}
                 {/*<ChatWindow
                     userName={this.props.userName}
                     chatMessages={this.props.chatMessages}

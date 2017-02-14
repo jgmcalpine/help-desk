@@ -4,16 +4,28 @@ import MyQuestion from './my-question.jsx';
 import NewQuestion from './new-question.jsx';
 
 export default class QuestionWindow extends React.Component {
-    render() {
-      return (
-        <div className="row">
-          <div className="col-lg-3">Opened</div>
-          <div className="col-lg-3">Pending</div>
-          <div className="col-lg-3">Resent</div>
-          <div className="col-lg-3">Closed</div>
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const questions = [];
+    this.props.getQuestions().then(() => {
+      console.log('INSIDE PROMISE');
+      console.log(this.props.state);      
+    });
+
+
+
+    return (
+      <div className="row">
+        <div className="col-lg-4">
+          OPENED
+          {questions}
         </div>
-      );
-    }
+      </div>
+    );
+  }
     /*render() {
         const questions = [];
         for (var key in this.props.questions) {
