@@ -1,13 +1,13 @@
-const Message = require('../models/messageModel');
+const Models = require('../models');
 
 function getMessages(req, res) {
-  Message.findAll({
+  Models.Messages.findAll({
     order: '"createdAt" ASC',
   }).then(messages => res.send(messages));
 }
 
 function addMessage(req, res) {
-  Message.create({
+  Models.Messages.create({
     questionid: req.body.questionid,
     username: req.body.username,
     message: req.body.message,

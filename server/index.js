@@ -2,17 +2,16 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const request = require('request')
+const request = require('request');
 const api = require('./../config.js');
 const qs = require('querystring');
-const github = api.github;
 const userCtrl = require('./controllers/userController.js');
 const questionCtrl = require('./controllers/questionController.js');
 const messageCtrl = require('./controllers/messageController.js');
 
+const github = api.github;
 const app = express();
 
-const x = require('models');
 
 if (process.env.NODE_ENV === 'development') {
   console.log('DEVELOPMENT MODE'); 

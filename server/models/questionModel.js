@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const connection = require('../pgConnection');
+// const User = require('./userModel');
 
 const Question = connection.define('questions', {
   question: {
@@ -18,12 +19,5 @@ const Question = connection.define('questions', {
     defaultValue: false,
   },
 });
-
-Question.sync(
-  // {
-  //   // remove when tables solidified
-  //   force: true,
-  // }
-);
 
 module.exports = Question;
