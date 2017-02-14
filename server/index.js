@@ -7,7 +7,7 @@ const request = require('request');
 const qs = require('querystring');
 const userCtrl = require('./controllers/userController.js');
 const questionCtrl = require('./controllers/questionController.js');
-const messageCtrl = require('./controllers/messageController.js');
+const responseCtrl = require('./controllers/responseController.js');
 const port = process.env.PORT || 3000;
 
 // const github = api.github;
@@ -36,7 +36,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/signup', userCtrl.addUser);
-app.post('/login', userCtrl.verifyUser)
+app.post('/login', userCtrl.verifyUser);
 
 app.post('/users', userCtrl.addUser);
 app.get('/users', userCtrl.getUsers);
@@ -44,8 +44,8 @@ app.get('/users', userCtrl.getUsers);
 app.get('/questions', questionCtrl.getQuestions);
 app.post('/questions', questionCtrl.addQuestion);
 
-app.get('/messages', messageCtrl.getMessages);
-app.post('/messages', messageCtrl.addMessage);
+app.get('/responses', responseCtrl.getResponses);
+app.post('/responses', responseCtrl.addResponse);
 
 // app.get('/auth/github', (req, res) => {  //first step in button request
 //     console.log('step 0');

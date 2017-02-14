@@ -8,10 +8,11 @@ const QuestionStatus = require('./questionStatusModel');
 const Sequelize = require('sequelize');
 const connection = require('../pgConnection');
 
-Users.hasOne(Profiles);
+Users.belongsTo(Profiles);
 Users.hasMany(Questions);
 Users.hasMany(Responses);
-Questions.hasOne(QuestionStatus);
+Questions.belongsTo(QuestionStatus);
+Responses.belongsTo(Questions);
 
 connection.sync();
 
