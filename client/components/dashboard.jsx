@@ -4,7 +4,7 @@ import ImageWindow from './image-window.jsx'
 import QuestionsWindow from './questions-window.jsx';
 import {router} from 'react-router';
 
-export default class MainPage extends React.Component {
+export default class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.props.getQuestions();
@@ -22,14 +22,14 @@ export default class MainPage extends React.Component {
                     newQuestionInput={this.props.newQuestionInput}
                 />
                 <ImageWindow />
-                <ChatWindow
+                {/*<ChatWindow
                     userName={this.props.userName}
                     chatMessages={this.props.chatMessages}
                     id={this.props.selectedQuestionId}
                     chatInputHandler={this.props.chatInputHandler}
                     chatInput={this.props.chatInput}
                     postMessage={this.props.postMessage}
-                />
+                />*/}
             </div>
         )
     }

@@ -44,7 +44,7 @@ const QuestionStatus = connection.define('question_status', {
 
 // Will add a questionId attribute to QuestionStatus to hold the primary key
 // value for Question
-QuestionStatus.belongsTo(Question);
+// QuestionStatus.belongsTo(Question);
 
 Question.sync(
   // {
@@ -53,6 +53,6 @@ Question.sync(
   // }
 );
 
-QuestionStatus.sync();
+// QuestionStatus.sync();
 
 module.exports = { Question, QuestionStatus };

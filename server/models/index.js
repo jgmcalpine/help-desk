@@ -7,7 +7,7 @@ const Sequelize = require('sequelize');
 const connection = require('../pgConnection');
 
 Profiles.belongsTo(Users);
-Questions.belongsTo(Users);
+// Questions.belongsTo(Users);
 Users.hasOne(Profiles);
 
 connection.sync();
