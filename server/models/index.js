@@ -2,13 +2,14 @@ const Profiles = require('./userProfilesModel');
 const Users = require('./userModel');
 const Questions = require('./questionModel');
 const Messages = require('./messageModel');
+const QuestionStatus = require('./questionStatusModel');
 
 const Sequelize = require('sequelize');
 const connection = require('../pgConnection');
 
-Profiles.belongsTo(Users);
-// Questions.belongsTo(Users);
 Users.hasOne(Profiles);
+Users.hasMany(Questions);
+Questions.hasOne(QuestionStatus);
 
 connection.sync();
 
@@ -17,4 +18,5 @@ module.exports = {
   Users,
   Questions,
   Messages,
+  QuestionStatus,
 };
