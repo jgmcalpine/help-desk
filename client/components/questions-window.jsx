@@ -5,6 +5,16 @@ import NewQuestion from './new-question.jsx';
 
 export default class QuestionWindow extends React.Component {
     render() {
+      return (
+        <div className="row">
+          <div className="col-lg-3">Opened</div>
+          <div className="col-lg-3">Pending</div>
+          <div className="col-lg-3">Resent</div>
+          <div className="col-lg-3">Closed</div>
+        </div>
+      );
+    }
+    /*render() {
         const questions = [];
         for (var key in this.props.questions) {
             if (this.props.userName === this.props.questions[key].userName) {
@@ -45,5 +55,5 @@ export default class QuestionWindow extends React.Component {
             </div>
           </div>
         )
-    }
+    }*/
 }

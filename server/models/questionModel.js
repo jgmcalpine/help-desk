@@ -15,3 +15,4 @@ const Question = connection.define('questions', {
 });
 
 module.exports = Question;
+
