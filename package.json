@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server/server.js",
-    "watch": "webpack -w ./src/index.js ./client/bundle.js",
-    "build": "webpack ./src/index.js ./client/bundle.js"
+    "watch": "webpack -w ./src/index.js ./dist/bundle.js",
+    "build": "webpack ./client/index.js ./dist/bundle.js"
   },
   "keywords": [],
   "author": "",
