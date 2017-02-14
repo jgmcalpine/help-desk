@@ -1,10 +1,12 @@
 const Sequelize = require('sequelize');
 const connection = require('../pgConnection');
 const bcrypt = require('bcryptjs');
+// const Profiles = require('./userProfilesModel');
 
 const User = connection.define('users', {
   username: {
     type: Sequelize.STRING,
+    unique: true,
     allowNull: false,
   },
   password: {
@@ -18,12 +20,5 @@ const User = connection.define('users', {
     },
   },
 });
-
-User.sync(
-  // // add to delete ALL info, remove when tables solidified
-  // {
-  //   force: true,
-  // }
-);
 
 module.exports = User;

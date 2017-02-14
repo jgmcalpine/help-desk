@@ -1,17 +1,19 @@
-
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const request = require('request')
+const request = require('request');
 const api = require('./../config.js');
 const qs = require('querystring');
-const github = api.github;
 const userCtrl = require('./controllers/userController.js');
 const questionCtrl = require('./controllers/questionController.js');
 const messageCtrl = require('./controllers/messageController.js');
+// const Models = require('./models');
+// const connection = require('./pgConnection');
 
+const github = api.github;
 const app = express();
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '..')));
 
