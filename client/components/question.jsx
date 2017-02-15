@@ -1,5 +1,6 @@
 import React from 'react';
 import Response from './response.jsx';
+import QuestionAction from './questionaction.jsx';
 
 export default class Question extends React.Component {
   constructor(props) {
@@ -13,11 +14,12 @@ export default class Question extends React.Component {
 
   render() {
     let types = {
-      1: 'success',
-      2: 'danger',
-      3: 'warning',
-      4: 'primary',
+      1: 'primary',
+      2: 'warning',
+      3: 'danger',
+      4: 'success',
     };
+
     let responses = [];
     this.props.data.responses.forEach((response, idx) => {
       responses.push(<Response key={'response' + response.id} data={response} />);
@@ -26,14 +28,10 @@ export default class Question extends React.Component {
     return (
       <div className="panel-group" id={'accordion' + this.props.data.id} role="tablist" aria-multiselectable="true">
         <div className={'panel panel-' + types[this.props.status]}>
-
           <div className="panel-heading" role="tab" id="headingOne">
             <h4 className="panel-title">
               <a role="button" data-id={this.props.data.id} data-toggle="collapse" data-parent={'#accordion' + this.props.data.id} href={'#collapseOne' + this.props.data.id} aria-expanded="true" aria-controls="collapseOne">
                 {this.props.data.question}
-                {/*{this.props.data.created_at}
-                {this.props.data.userId}
-                {this.props.data.id}*/}
               </a>
             </h4>
           </div>
@@ -42,15 +40,8 @@ export default class Question extends React.Component {
               <ul className="list-group">
                 {responses}
               </ul>
-              <form>
-                <div className="input-group">
-                  <input type="text" className="form-control" />
-                  <span className="input-group-btn">
-                    <button className="btn btn-default" type="button">Answer</button>
-                  </span>
-                </div>
-              </form>
             </div>
+            <QuestionAction status={this.props.data.status.id} />
           </div>
         </div>
       </div>

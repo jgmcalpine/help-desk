@@ -83,10 +83,7 @@ export default class App extends React.Component {
        updatedAt: '2017-02-13 21:32:36.698226-08',
        status: { id: 1, name: 'Opened' },
        user: { id: 2, name: 'Flavia' },
-       responses: [
-         {id: 1, response: 'Pablo Silveira', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 1, name: 'Bia'}},
-         {id: 3, response: 'Balboa', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 3, name: 'Rocky'}},
-       ],
+       responses: [],
       },
       2: {
        id: 2,
@@ -96,7 +93,7 @@ export default class App extends React.Component {
        responses: [
          {id: 1, response: '163412 terabytes', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 1, name: 'Jose'}},
        ],
-       status: { id: 2, name: 'Closed' },
+       status: { id: 2, name: 'Answered' },
        user: { id: 2, name: 'Cris' },
       }, 
       3: {
@@ -104,7 +101,7 @@ export default class App extends React.Component {
        question: 'Is it possible to be happy alone?',
        createdAt: '2017-02-13 21:32:36.698226-08',
        updatedAt: '2017-02-13 21:32:36.698226-08',
-       status: { id: 1, name: 'Opened' },
+       status: { id: 3, name: 'Denied' },
        user: { id: 2, name: 'Beatriz' },
        responses: [
          {id: 1, response: 'Sure', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 1, name: 'Bia'}},
@@ -116,33 +113,12 @@ export default class App extends React.Component {
        question: 'Lorem ispusm dolor wet?',
        createdAt: '2017-02-13 21:32:36.698226-08',
        updatedAt: '2017-02-13 21:32:36.698226-08',
-       status: { id: 1, name: 'Opened' },
+       status: { id: 4, name: 'Closed' },
        user: { id: 2, name: 'Beatriz' },
        responses: [
          {id: 1, response: 'Some where over the rainbow you can find the inexistent', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 1, name: 'Bia'}},
        ],
       },
-      5: {
-       id: 5,
-       question: 'How can I factory reset my mobile phone?',
-       createdAt: '2017-02-13 21:32:36.698226-08',
-       updatedAt: '2017-02-13 21:32:36.698226-08',
-       status: { id: 4, name: 'Opened' },
-       user: { id: 2, name: 'Beatriz' },
-       responses: [],
-      },
-      6: {
-       id: 6,
-       question: 'Is it possible to be happy alone?',
-       createdAt: '2017-02-13 21:32:36.698226-08',
-       updatedAt: '2017-02-13 21:32:36.698226-08',
-       status: { id: 3, name: 'Opened' },
-       user: { id: 2, name: 'Beatriz' },
-       responses: [
-         {id: 1, response: 'Sure', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 1, name: 'Bia'}},
-         {id: 3, response: 'No', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 3, name: 'Rocky'}},
-       ],
-      }
     };
 
     // $.get('/questions', (response) => {
