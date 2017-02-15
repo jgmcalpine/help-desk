@@ -24,8 +24,11 @@ function addUser(req, res) {
 function verifyUser(req, res) {
   Models.Users.findOne({ where: { username: req.body.username } }).then((result) => {
     if (result !== null && bcrypt.compareSync(req.body.password, result.password)) {
-      res.cookie('user', req.body.username); // add sessions
-      res.json({ status: 'success', username: req.body.username });
+      // res.cookie('user', req.body.username); // add sessions
+      res.json({
+        id: result.id,
+        username: req.body.username,
+       });
     } else {
       res.redirect('/');
     }
