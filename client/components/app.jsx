@@ -55,7 +55,6 @@ export default class App extends React.Component {
     e.preventDefault();
     const username = e.target.username.value;
     const password = e.target.password.value;
-    console.log(username);
     $.ajax({
       url: '/login/',
       type: 'POST',
@@ -180,10 +179,27 @@ export default class App extends React.Component {
   }
 
   postQuestion(dataObj) {
-    $.post('/questions', dataObj, (response) => {
-      console.log(response);
-    });
+    $.ajax({
+      url: '/questions/',
+      type: 'POST',
+      data: JSON.stringify(dataObj),
+      contentType: "application/json; charset=utf-8",
+    })
+    .done((data) => {
+      console.log(data);
+      // this.setState({
+      //   userId: data.id,
+      //   userName: data.username,
+      // }, () => {
+      //   browserHistory.push('/dashboard');
+      // });
+    })
+    .fail(function() {
+      alert("error");
+    })
   };
+
+
   
   render() {
     return (
