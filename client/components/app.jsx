@@ -11,17 +11,18 @@ import {
 } from 'react-router';
 
 export default class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       userName: 'miketyson001',
-      questions: [],
-      selectedQuestionId: '',
-      selectedQuestionChat: [],
-      chatInput: '',
-      newQuestionInput: '',
+      questions: {},
+      questionsStatus: [
+        {id: 1, name: 'Opened'},
+        {id: 2, name: 'Pending'},
+        {id: 3, name: 'Waiting'},
+        {id: 4, name: 'Closed'},
+      ]
     };
-    // this.gitHubLogin = this.gitHubLogin.bind(this);
     this.getQuestions = this.getQuestions.bind(this);
     this.getMessages = this.getMessages.bind(this);
     this.setSelectedQuestionChat = this.setSelectedQuestionChat.bind(this);
@@ -71,19 +72,60 @@ export default class App extends React.Component {
   };
 
   getQuestions() {
-    return $.get('/questions', (response) => {
-      const newState = { questions: {} };
-      response.forEach((question) => {
-        newState.questions[question.id] = {
-          id: question.id,
-          userName: question.asker,
-          question: question.question,
-          created_at: question.createdAt,
-          chatMessages: [],
-        }
-      })
-      this.setState(newState);
-    });
+    return {
+      1: {
+       id: 1,
+       question: 'What is the name of the first president of Colombia?',
+       createdAt: '2017-02-13 21:32:36.698226-08',
+       updatedAt: '2017-02-13 21:32:36.698226-08',
+       status: { id: 1, name: 'Opened' },
+       user: { id: 2, name: 'Flavia' },
+       responses: [
+         {id: 1, response: 'Pablo Silveira', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 1, name: 'Bia'}},
+         {id: 2, response: 'Pablo Escobar', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 2, name: 'Arnold'}},
+         {id: 3, response: 'Balboa', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 3, name: 'Rocky'}},
+       ],
+      },
+      2: {
+       id: 2,
+       question: 'How many information can you store in your brain?',
+       createdAt: '2017-02-13 21:32:36.698226-08',
+       updatedAt: '2017-02-13 21:32:36.698226-08',
+       responses: [
+         {id: 1, response: '163412 terabytes', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 1, name: 'Jose'}},
+         {id: 2, response: 'I have no idea', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 2, name: 'Rambo'}},
+         {id: 3, response: 'As far as you allow', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 3, name: 'Rocky'}},
+       ],
+       status: { id: 2, name: 'Closed' },
+       user: { id: 2, name: 'Cris' },
+      }, 
+      3: {
+       id: 3,
+       question: 'Is it possible to be happy alone?',
+       createdAt: '2017-02-13 21:32:36.698226-08',
+       updatedAt: '2017-02-13 21:32:36.698226-08',
+       status: { id: 1, name: 'Opened' },
+       user: { id: 2, name: 'Beatriz' },
+       responses: [
+         {id: 1, response: 'Sure', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 1, name: 'Bia'}},
+         {id: 2, response: 'Maybe', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 2, name: 'Arnold'}},
+         {id: 3, response: 'No', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 3, name: 'Rocky'}},
+       ],
+      }
+    };
+
+    // $.get('/questions', (response) => {
+    //   const newState = {questions : {}};
+    //   response.forEach((question) => {
+    //     newState.questions[question] = {
+    //       id: question.id,
+    //       question: question.question,
+    //       created_at: question.createdAt,
+    //       userId: question.userId
+    //     }
+    //   })
+    //   this.setState(newState);
+    // });
   }
 
   getMessages() {
@@ -148,12 +190,6 @@ export default class App extends React.Component {
     this.setState({ newQuestionInput: '' });
   };
   
-  // gitHubLogin() {
-  //   $.get('/auth/github', (response) => {
-  //     browserHistory.push('/main_page');
-  //   });
-  // }
-
   render() {
     return (
       <Router history={browserHistory}>
@@ -162,16 +198,6 @@ export default class App extends React.Component {
         <Route path="/dashboard" component={() => <Dashboard
           mainState={this.state}
           getQuestions={this.getQuestions}
-          getMessages={this.getMessages}
-          chatMessages={this.state.selectedQuestionChat}
-          setSelectedQuestionChat={this.setSelectedQuestionChat}
-          selectedQuestionId={this.state.selectedQuestionId}
-          chatInputHandler={this.chatInputHandler}
-          chatInput={this.state.chatInput}
-          postMessage={this.postMessage}
-          postNewQuestion={this.postNewQuestion}
-          newQuestionInput={this.newQuestionInput}
-          newQuestionInputHandler={this.newQuestionInputHandler}
         />} />
       </Router>
     );
