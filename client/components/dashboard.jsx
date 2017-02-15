@@ -28,16 +28,16 @@ export default class Dashboard extends React.Component {
     let arr4 = [];
 
     filtered1.forEach((question, idx) => {
-      arr1.push(<Question key={question.id} status={1} data={question} />);
+      arr1.push(<Question key={question.id} status={1} data={question} handleResponsePost={this.props.handleResponsePost} />);
     });
     filtered2.forEach((question, idx) => {
-      arr2.push(<Question key={question.id} status={2} data={question} />);
+      arr2.push(<Question key={question.id} status={2} data={question} handleResponsePost={this.props.handleResponsePost} />);
     });
     filtered3.forEach((question, idx) => {
-      arr3.push(<Question key={question.id} status={3} data={question} />);
+      arr3.push(<Question key={question.id} status={3} data={question} handleResponsePost={this.props.handleResponsePost} />);
     });
     filtered4.forEach((question, idx) => {
-      arr4.push(<Question key={question.id} status={4} data={question} />);
+      arr4.push(<Question key={question.id} status={4} data={question} handleResponsePost={this.props.handleResponsePost} />);
     });
 
     return (

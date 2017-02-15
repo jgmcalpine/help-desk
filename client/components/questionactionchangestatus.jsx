@@ -20,7 +20,7 @@ export default class QuestionActionChangeStatus extends React.Component {
             <button type="button" className="btn btn-primary">Right</button>
           </div>
         </div>
-      )
+      );
     }
 }
 

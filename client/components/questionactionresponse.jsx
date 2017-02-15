@@ -10,12 +10,16 @@ export default class QuestionActionResponse extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     return (
+      <form onSubmit={this.props.handleResponsePost}>
         <div className="input-group">
-            <input type="text" className="form-control" />
-            <span className="input-group-btn">
+          <input type="text" className="form-control" />
+          <span className="input-group-btn">
             <button className="btn btn-default" type="button">Answer</button>
-            </span>
+          </span>
         </div>
-    )}
+      </form>
+    );
+  }
 }
