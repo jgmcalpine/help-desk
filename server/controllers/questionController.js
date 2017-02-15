@@ -12,7 +12,7 @@ function addQuestion(req, res) {
     userId: req.body.userId,
     questionStatusId: 1,
   })
-  .then(() => res.send('Question added'))
+  .then((data) => res.json(data))
   .catch(err => res.send(err));
 }
 

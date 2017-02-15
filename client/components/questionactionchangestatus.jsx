@@ -12,12 +12,15 @@ export default class QuestionActionChangeStatus extends React.Component {
 
   render() {
       return (
-        <div className="input-group">
-            <span className="input-group-btn">
-            <button className="btn btn-danger" type="button">Decline</button>
-            <button className="btn btn-primary" type="button">Close</button>
-            </span>
+        <div className="btn-group btn-group-justified" role="group" aria-label="...">
+          <div className="btn-group" role="group">
+            <button type="button" className="btn btn-danger">Decline</button>
+          </div>
+          <div className="btn-group" role="group">
+            <button type="button" className="btn btn-primary">Right</button>
+          </div>
         </div>
       );
     }
 }
+
