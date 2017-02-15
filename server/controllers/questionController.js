@@ -7,11 +7,10 @@ function getQuestions(req, res) {
 }
 
 function addQuestion(req, res) {
-  console.log('i am adding a question', req.body);
   Models.Questions.create({
     question: req.body.question,
     userId: req.body.userId,
-    questionStatusId: req.body.questionStatusId,
+    questionStatusId: 1,
   })
   .then(() => res.send('Question added'))
   .catch(err => res.send(err));

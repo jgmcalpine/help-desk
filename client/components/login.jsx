@@ -15,7 +15,7 @@ export default class Login extends React.Component {
                     <div className="col-md-4 col-md-offset-4 text-center">
                         <div className="login-panel panel panel-default">
                             <div className="panel-heading">
-                                <h1 className="panel-title">Help Desk</h1>
+                                <h1 className="panel-title">LogIn</h1>
                             </div>
                             <div className="panel-body">
                                 <form role="form" id="login-form" onSubmit={this.props.handleLogIn}>
@@ -26,7 +26,7 @@ export default class Login extends React.Component {
                                         <div className="form-group">
                                             <input name="password" className="form-control" placeholder="Password" />
                                         </div>
-                                        <button type="submit" className="btn btn-primary btn-block">Login</button>
+                                        <button type="submit" className="btn btn-primary btn-block">Enter</button>
                                     </fieldset>
                                 </form>
                             </div>

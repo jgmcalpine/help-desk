@@ -42,11 +42,10 @@ export default class Dashboard extends React.Component {
 
     return (
       <div>
-        <Navbar />
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              <NewQuestion />              
+              <NewQuestion mainState={this.props.mainState} postQuestion={this.props.postQuestion} />         
             </div>
           </div>
           <div className="row">

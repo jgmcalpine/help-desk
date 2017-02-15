@@ -2,6 +2,7 @@ import React from 'react';
 import Login from './login.jsx';
 import Signup from './signup.jsx';
 import Dashboard from './dashboard.jsx';
+import Navbar from './navbar.jsx';
 import $ from 'jquery';
 import {
   Router,
@@ -14,7 +15,8 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: 'miketyson001',
+      userId: null,
+      userName: null,
       questions: {},
       questionsStatus: [
         {id: 1, name: 'Opened'},
@@ -24,12 +26,7 @@ export default class App extends React.Component {
       ]
     };
     this.getQuestions = this.getQuestions.bind(this);
-    this.getMessages = this.getMessages.bind(this);
-    this.setSelectedQuestionChat = this.setSelectedQuestionChat.bind(this);
-    this.chatInputHandler = this.chatInputHandler.bind(this);
-    this.newQuestionInputHandler = this.newQuestionInputHandler.bind(this);
-    this.postMessage = this.postMessage.bind(this);
-    this.postNewQuestion = this.postNewQuestion.bind(this);
+    this.postQuestion = this.postQuestion.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
     this.handleLogIn = this.handleLogIn.bind(this);
   }
@@ -53,21 +50,27 @@ export default class App extends React.Component {
     });
   };
 
-  handleLogIn(event) {
-    event.preventDefault();
-    const username = event.target.username.value;
-    const password = event.target.password.value;
+
+  handleLogIn(e) {
+    e.preventDefault();
+    const username = e.target.username.value;
+    const password = e.target.password.value;
     $.ajax({
       url: '/login/',
       type: 'POST',
       data: JSON.stringify({username, password}),
       contentType: "application/json; charset=utf-8",
-      success: (data) => {
-        if (data.status === 'success') {
-          this.setState({userName: data.username});
-          browserHistory.push('/dashboard');
-        }
-      }
+    })
+    .done((data) => {
+      this.setState({
+        userId: data.id,
+        userName: data.username,
+      }, () => {
+        browserHistory.push('/dashboard');
+      });
+    })
+    .fail(function() {
+      alert("error");
     })
   };
 
@@ -82,7 +85,6 @@ export default class App extends React.Component {
        user: { id: 2, name: 'Flavia' },
        responses: [
          {id: 1, response: 'Pablo Silveira', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 1, name: 'Bia'}},
-         {id: 2, response: 'Pablo Escobar', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 2, name: 'Arnold'}},
          {id: 3, response: 'Balboa', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 3, name: 'Rocky'}},
        ],
       },
@@ -93,8 +95,6 @@ export default class App extends React.Component {
        updatedAt: '2017-02-13 21:32:36.698226-08',
        responses: [
          {id: 1, response: '163412 terabytes', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 1, name: 'Jose'}},
-         {id: 2, response: 'I have no idea', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 2, name: 'Rambo'}},
-         {id: 3, response: 'As far as you allow', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 3, name: 'Rocky'}},
        ],
        status: { id: 2, name: 'Closed' },
        user: { id: 2, name: 'Cris' },
@@ -109,6 +109,37 @@ export default class App extends React.Component {
        responses: [
          {id: 1, response: 'Sure', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 1, name: 'Bia'}},
          {id: 2, response: 'Maybe', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 2, name: 'Arnold'}},
+       ],
+      },
+      4: {
+       id: 4,
+       question: 'Lorem ispusm dolor wet?',
+       createdAt: '2017-02-13 21:32:36.698226-08',
+       updatedAt: '2017-02-13 21:32:36.698226-08',
+       status: { id: 1, name: 'Opened' },
+       user: { id: 2, name: 'Beatriz' },
+       responses: [
+         {id: 1, response: 'Some where over the rainbow you can find the inexistent', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 1, name: 'Bia'}},
+       ],
+      },
+      5: {
+       id: 5,
+       question: 'How can I factory reset my mobile phone?',
+       createdAt: '2017-02-13 21:32:36.698226-08',
+       updatedAt: '2017-02-13 21:32:36.698226-08',
+       status: { id: 4, name: 'Opened' },
+       user: { id: 2, name: 'Beatriz' },
+       responses: [],
+      },
+      6: {
+       id: 6,
+       question: 'Is it possible to be happy alone?',
+       createdAt: '2017-02-13 21:32:36.698226-08',
+       updatedAt: '2017-02-13 21:32:36.698226-08',
+       status: { id: 3, name: 'Opened' },
+       user: { id: 2, name: 'Beatriz' },
+       responses: [
+         {id: 1, response: 'Sure', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 1, name: 'Bia'}},
          {id: 3, response: 'No', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 3, name: 'Rocky'}},
        ],
       }
@@ -147,59 +178,40 @@ export default class App extends React.Component {
     });
   }
 
-  postMessage(id, e) {
-    e.preventDefault();
-    $.post('/messages', {
-      questionid: id,
-      username: this.state.userName,
-      message: this.state.chatInput,
-    }, (response) => {
-      this.getQuestions();
-      this.getMessages();
-    });
-    this.setState({ chatInput: '' })
-  }
-
-  newQuestionInputHandler(e) {
-    e.preventDefault();
-    this.setState({ newQuestionInput: e.target.value });
-  }
-
-  chatInputHandler(e) {
-    e.preventDefault();
-    this.setState({ chatInput: e.target.value });
-  }
-
-  setSelectedQuestionChat(id) {
-    if (id) {
-      this.setState({
-        selectedQuestionChat: this.state.questions[id].chatMessages,
-        selectedQuestionId: id,
-      });
-    }
-  }
-
-  postNewQuestion(e) {
-    e.preventDefault();
-    $.post('/questions', {
-      asker: this.state.userName,
-      question: this.state.newQuestionInput,
-    }, (response) => {
-      this.getQuestions();
-    });
-    this.setState({ newQuestionInput: '' });
+  postQuestion(dataObj) {
+    $.ajax({
+      url: '/questions/',
+      type: 'POST',
+      data: JSON.stringify(dataObj),
+      contentType: "application/json; charset=utf-8",
+    })
+    .done((data) => {
+      console.log(data);
+      // this.setState({
+      //   userId: data.id,
+      //   userName: data.username,
+      // }, () => {
+      //   browserHistory.push('/dashboard');
+      // });
+    })
+    .fail(function() {
+      alert("error");
+    })
   };
+
+
   
   render() {
     return (
-      <Router history={browserHistory}>
-        <Route path="/" component={() => <Login handleLogIn={this.handleLogIn} />} />
-        <Route path="/signup" component={() => <Signup handleSignUp={this.handleSignUp} />} />
-        <Route path="/dashboard" component={() => <Dashboard
-          mainState={this.state}
-          getQuestions={this.getQuestions}
-        />} />
-      </Router>
+      <div>
+        <Navbar userName={this.state.userName} />
+        {React.cloneElement(this.props.children, {
+          mainState: this.state,
+          getQuestions: this.getQuestions,
+          postQuestion: this.postQuestion,
+          handleLogIn: this.handleLogIn,
+        })}
+      </div>
     );
   }
 }
