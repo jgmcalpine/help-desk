@@ -7,6 +7,13 @@ export default class Signup extends React.Component {
     constructor(props) {
         super(props);
     }
+
+    handleClick(e) {
+      e.preventDefault();
+      const profileChoice = e.target.dataset.value;
+      console.log(profileChoice);
+      document.getElementById('profileField').value = profileChoice;
+    }
     
     render() {
         return (
@@ -19,6 +26,7 @@ export default class Signup extends React.Component {
                             </div>
                             <div className="panel-body">
                                 <form role="form" id="login-form" onSubmit={this.props.handleSignUp}>
+                                    <input type="hidden" id="profileField" value="" />
                                     <fieldset>
                                         <div className="form-group">
                                             <input name="username" className="form-control" placeholder="Username" autoFocus />
@@ -29,7 +37,11 @@ export default class Signup extends React.Component {
                                         <div className="form-group">
                                             <input name="confirm_password" className="form-control" placeholder="Confirm password" onChange={this.handleChange} />
                                         </div>
-                                        <button type="submit" className="btn btn-primary btn-block">Create account</button>
+                                        <div className="btn-group form-group" role="group">
+                                          <button data-value="1" type="button" className="btn btn-default" onClick={this.handleClick} >Client</button>
+                                          <button data-value="2" type="button" className="btn btn-default" onClick={this.handleClick} >Instructor</button>
+                                        </div>
+                                        <button type="submit" className="btn btn-primary btn-block form-group">Create account</button>
                                     </fieldset>
                                 </form>
                             </div>

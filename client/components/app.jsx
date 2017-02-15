@@ -38,15 +38,16 @@ export default class App extends React.Component {
     event.preventDefault();
     const username = event.target.username.value;
     const password = event.target.password.value;
+    const profile = event.target.profileField.value;
     $.ajax({
       url: '/signup/',
       type: 'POST',
-      data: JSON.stringify({username, password}),
-      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify({ username, password, profile }),
+      contentType: 'application/json; charset=utf-8',
       success: (data) => {
         if (data.status === 'success') {
-          this.setState({userName: data.username})
-          browserHistory.push('/main_page');  
+          this.setState({ userName: data.username });
+          browserHistory.push('/main_page');
         }
       }
     });
@@ -135,7 +136,7 @@ export default class App extends React.Component {
           temp[message.questionid].chatMessages.push({
             userName: message.username,
             message: message.message,
-            created_at: message.createdAt
+            created_at: message.createdAt,
           })
         }
       });
@@ -192,8 +193,8 @@ export default class App extends React.Component {
   render() {
     return (
       <Router history={browserHistory}>
-        <Route path="/" component={() => <Login handleLogIn = {this.handleLogIn} />} />
-        <Route path="/signup" component={() => <Signup handleSignUp = {this.handleSignUp} />} />
+        <Route path="/" component={() => <Login handleLogIn={this.handleLogIn} />} />
+        <Route path="/signup" component={() => <Signup handleSignUp={this.handleSignUp} />} />
         <Route path="/dashboard" component={() => <Dashboard
           mainState={this.state}
           getQuestions={this.getQuestions}

@@ -8,12 +8,13 @@ function getUsers(req, res) {
 }
 
 function addUser(req, res) {
-  console.log('in add user');
+  console.log('in add user', req.body);
   // need error for if user already exists
-  if (req.body.username && req.body.password) {
+  if (req.body.username && req.body.password && req.body.profile) {
     Models.Users.create({
       username: req.body.username,
       password: req.body.password,
+      profile: req.body.profile,
     });
     res.cookie('user', req.body.username); // need to make this more secure
     res.json({ status: 'success', username: req.body.username }); // need to add sessions

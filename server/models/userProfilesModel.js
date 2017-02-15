@@ -3,8 +3,8 @@ const connection = require('../pgConnection');
 // const User = require('./userModel');
 
 const Profiles = connection.define('profiles', {
-  profile: {
-    type: Sequelize.STRING,
+  profileType: {
+    type: Sequelize.INTEGER,
   },
   description: {
     type: Sequelize.STRING,
