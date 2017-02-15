@@ -18,6 +18,7 @@ export default class App extends React.Component {
       userId: null,
       userName: null,
       questions: {},
+      answers: {},
       questionsStatus: [
         {id: 1, name: 'Opened'},
         {id: 2, name: 'Pending'},
@@ -29,6 +30,7 @@ export default class App extends React.Component {
     this.postQuestion = this.postQuestion.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
     this.handleLogIn = this.handleLogIn.bind(this);
+    this.handleResponsePost = this.handleResponsePost.bind(this);
   }
 
   handleSignUp (event) {
@@ -159,7 +161,7 @@ export default class App extends React.Component {
       url: '/questions/',
       type: 'POST',
       data: JSON.stringify(dataObj),
-      contentType: "application/json; charset=utf-8",
+      contentType: 'application/json; charset=utf-8',
     })
     .done((data) => {
       console.log(data);
@@ -171,12 +173,27 @@ export default class App extends React.Component {
       // });
     })
     .fail(function() {
-      alert("error");
+      alert('error');
     })
   };
 
+  handleResponsePost(event) {
+    console.log('lets be sure');
+    event.preventDefault;
+    const response = event.target.response.value;
+    $.ajax({
+      url: '/responses/',
+      type: 'POST',
+      data: JSON.stringify(dataObj),
+      contentType: 'application/json; charset=utf-8',
+      success: (data) => {
+        if (data.status === 'success') {
+          this.setState({ responses: data.responses });
+        }
+      }
+    })
+  }
 
-  
   render() {
     return (
       <div>
@@ -186,6 +203,7 @@ export default class App extends React.Component {
           getQuestions: this.getQuestions,
           postQuestion: this.postQuestion,
           handleLogIn: this.handleLogIn,
+          handleResponsePost: this.handleResponsePost,
         })}
       </div>
     );

@@ -22,9 +22,9 @@ export default class QuestionAction extends React.Component {
         actionComponent = <QuestionActionChangeStatus />;
     }
     return (
-        <form>
-            {actionComponent}
-        </form>
+      <div>
+        { actionComponent }
+      </div>
     );
   }
 }

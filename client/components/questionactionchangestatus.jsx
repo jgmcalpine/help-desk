@@ -18,6 +18,6 @@ export default class QuestionActionChangeStatus extends React.Component {
             <button className="btn btn-primary" type="button">Close</button>
             </span>
         </div>
-      )
+      );
     }
 }
