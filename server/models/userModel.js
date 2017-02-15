@@ -13,6 +13,10 @@ const User = connection.define('users', {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  // profile: {
+  //   type: Sequelize.INTEGER,
+  //   allowNull: false,
+  // },
 }, {
   hooks: {
     afterValidate: (user) => {
