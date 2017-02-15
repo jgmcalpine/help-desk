@@ -4,13 +4,12 @@ const Questions = require('./questionModel');
 const Responses = require('./responseModel');
 const QuestionStatus = require('./questionStatusModel');
 
-
 const Sequelize = require('sequelize');
 const connection = require('../pgConnection');
 
-Users.belongsTo(Profiles);
 Users.hasMany(Questions);
 Users.hasMany(Responses);
+Profiles.hasOne(Users);
 Questions.belongsTo(QuestionStatus);
 Responses.belongsTo(Questions);
 
