@@ -88,7 +88,7 @@ export default class App extends React.Component {
       },
       2: {
        id: 2,
-       question: 'How many information can you store in your brain?',
+       question: 'How much information can you store in your brain?',
        createdAt: '2017-02-13 21:32:36.698226-08',
        updatedAt: '2017-02-13 21:32:36.698226-08',
        responses: [
