@@ -50,7 +50,6 @@ export default class App extends React.Component {
     });
   };
 
-
   handleLogIn(e) {
     e.preventDefault();
     const username = e.target.username.value;
@@ -135,25 +134,6 @@ export default class App extends React.Component {
     // });
   }
 
-  getMessages() {
-    $.get('/messages', (res) => {
-      const temp = this.state.questions;
-      res.forEach((message) => {
-        if (temp.hasOwnProperty(message.questionid)) {
-          temp[message.questionid].chatMessages.push({
-            userName: message.username,
-            message: message.message,
-            created_at: message.createdAt,
-          })
-        }
-      });
-      this.setState({
-        questions: temp,
-        selectedQuestionChat: (this.state.selectedQuestionId ? this.state.questions[this.state.selectedQuestionId].chatMessages : [])
-      });
-    });
-  }
-
   postQuestion(dataObj) {
     $.ajax({
       url: '/questions/',
@@ -162,21 +142,18 @@ export default class App extends React.Component {
       contentType: "application/json; charset=utf-8",
     })
     .done((data) => {
-      console.log(data);
-      // this.setState({
-      //   userId: data.id,
-      //   userName: data.username,
-      // }, () => {
-      //   browserHistory.push('/dashboard');
-      // });
+      let questions = this.state.questions;
+      questions[data.id] = data;
+      this.setState(questions, () => {
+        console.log('State updated...');
+        browserHistory.push('/dashboard');
+      });
     })
     .fail(function() {
       alert("error");
     })
   };
 
-
-  
   render() {
     return (
       <div>

@@ -14,6 +14,7 @@ export default class NewQuestion extends React.Component {
           userId: this.props.mainState.userId,
           question: question
       }
+      e.target.question.value = '';
       this.props.postQuestion(dataToSend);
   }
 

@@ -13,13 +13,6 @@ export default class Question extends React.Component {
   }
 
   render() {
-    let types = {
-      1: 'primary',
-      2: 'warning',
-      3: 'danger',
-      4: 'success',
-    };
-
     let responses = [];
     this.props.data.responses.forEach((response, idx) => {
       responses.push(<Response key={'response' + response.id} data={response} />);
@@ -27,7 +20,7 @@ export default class Question extends React.Component {
 
     return (
       <div className="panel-group" id={'accordion' + this.props.data.id} role="tablist" aria-multiselectable="true">
-        <div className={'panel panel-' + types[this.props.status]}>
+        <div className="panel panel-default">
           <div className="panel-heading" role="tab" id="headingOne">
             <h4 className="panel-title">
               <a role="button" data-id={this.props.data.id} data-toggle="collapse" data-parent={'#accordion' + this.props.data.id} href={'#collapseOne' + this.props.data.id} aria-expanded="true" aria-controls="collapseOne">
@@ -40,8 +33,8 @@ export default class Question extends React.Component {
               <ul className="list-group">
                 {responses}
               </ul>
+              <QuestionAction status={this.props.data.status.id} />
             </div>
-            <QuestionAction status={this.props.data.status.id} />
           </div>
         </div>
       </div>

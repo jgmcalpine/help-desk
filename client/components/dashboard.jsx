@@ -50,15 +50,35 @@ export default class Dashboard extends React.Component {
           </div>
           <div className="row">
             <div className="col-lg-3">
+              <div className="panel panel-primary">
+                <div className="panel-heading text-center">
+                  <h3 className="panel-title">Opened</h3>
+                </div>
+              </div>
               {arr1}
             </div>
             <div className="col-lg-3">
+              <div className="panel panel-warning">
+                <div className="panel-heading text-center">
+                  <h3 className="panel-title">Answered</h3>
+                </div>
+              </div>
               {arr2}
             </div>
             <div className="col-lg-3">
+              <div className="panel panel-danger">
+                <div className="panel-heading text-center">
+                  <h3 className="panel-title">Declined</h3>
+                </div>
+              </div>
               {arr3}
             </div>
             <div className="col-lg-3">
+              <div className="panel panel-success">
+                <div className="panel-heading text-center">
+                  <h3 className="panel-title">Closed</h3>
+                </div>
+              </div>
               {arr4}
             </div>
           </div>
