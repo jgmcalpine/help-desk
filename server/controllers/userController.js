@@ -30,7 +30,7 @@ function verifyUser(req, res) {
         username: req.body.username,
        });
     } else {
-      res.redirect('/');
+      res.redirect('/login');
     }
   });
 }

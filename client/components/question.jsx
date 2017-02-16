@@ -14,9 +14,12 @@ export default class Question extends React.Component {
 
   render() {
     let responses = [];
-    this.props.data.responses.forEach((response, idx) => {
-      responses.push(<Response key={'response' + response.id} data={response} />);
-    });
+
+    if (this.props.data.responses) {
+      this.props.data.responses.forEach((response, idx) => {
+        responses.push(<Response key={'response' + response.id} data={response} />);
+      });
+    }
 
     return (
       <div className="panel-group" id={'accordion' + this.props.data.id} role="tablist" aria-multiselectable="true">
@@ -33,7 +36,7 @@ export default class Question extends React.Component {
               <ul className="list-group">
                 {responses}
               </ul>
-              <QuestionAction status={this.props.data.status.id} />
+              <QuestionAction status={this.props.data.questionStatusId} />
             </div>
           </div>
         </div>

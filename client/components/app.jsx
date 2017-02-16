@@ -56,19 +56,23 @@ export default class App extends React.Component {
     e.preventDefault();
     const username = e.target.username.value;
     const password = e.target.password.value;
-    $.ajax({
+    $.ajax({ 
       url: '/login/',
       type: 'POST',
       data: JSON.stringify({username, password}),
       contentType: "application/json; charset=utf-8",
     })
     .done((data) => {
-      this.setState({
-        userId: data.id,
-        userName: data.username,
-      }, () => {
-        browserHistory.push('/dashboard');
-      });
+      if (data.id) {
+        this.setState({
+          userId: data.id,
+          userName: data.username,
+        }, () => {
+          browserHistory.push('/dashboard');
+        });
+      } else {
+        alert('Invalid credentials!');
+      }
     })
     .fail(function() {
       alert("error");
@@ -76,64 +80,18 @@ export default class App extends React.Component {
   };
 
   getQuestions() {
-    return {
-      1: {
-       id: 1,
-       question: 'What is the name of the first president of Colombia?',
-       createdAt: '2017-02-13 21:32:36.698226-08',
-       updatedAt: '2017-02-13 21:32:36.698226-08',
-       status: { id: 1, name: 'Opened' },
-       user: { id: 2, name: 'Flavia' },
-       responses: [],
-      },
-      2: {
-       id: 2,
-       question: 'How much information can you store in your brain?',
-       createdAt: '2017-02-13 21:32:36.698226-08',
-       updatedAt: '2017-02-13 21:32:36.698226-08',
-       responses: [
-         {id: 1, response: '163412 terabytes', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 1, name: 'Jose'}},
-       ],
-       status: { id: 2, name: 'Answered' },
-       user: { id: 2, name: 'Cris' },
-      }, 
-      3: {
-       id: 3,
-       question: 'Is it possible to be happy alone?',
-       createdAt: '2017-02-13 21:32:36.698226-08',
-       updatedAt: '2017-02-13 21:32:36.698226-08',
-       status: { id: 3, name: 'Denied' },
-       user: { id: 2, name: 'Beatriz' },
-       responses: [
-         {id: 1, response: 'Sure', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 1, name: 'Bia'}},
-         {id: 2, response: 'Maybe', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 2, name: 'Arnold'}},
-       ],
-      },
-      4: {
-       id: 4,
-       question: 'Lorem ispusm dolor wet?',
-       createdAt: '2017-02-13 21:32:36.698226-08',
-       updatedAt: '2017-02-13 21:32:36.698226-08',
-       status: { id: 4, name: 'Closed' },
-       user: { id: 2, name: 'Beatriz' },
-       responses: [
-         {id: 1, response: 'Some where over the rainbow you can find the inexistent', createdAt: '2017-02-13 21:32:36.698226-08', user: {id: 1, name: 'Bia'}},
-       ],
-      },
-    };
-
-    // $.get('/questions', (response) => {
-    //   const newState = {questions : {}};
-    //   response.forEach((question) => {
-    //     newState.questions[question] = {
-    //       id: question.id,
-    //       question: question.question,
-    //       created_at: question.createdAt,
-    //       userId: question.userId
-    //     }
-    //   })
-    //   this.setState(newState);
-    // });
+    $.ajax({ 
+      url: '/questions',
+      type: 'GET',
+      contentType: "application/json; charset=utf-8",
+    })
+    .done((data) => {
+      const newState = {questions : {}};
+      data.forEach((question) => {
+        newState.questions[question.id] = question;
+      })
+      this.setState(newState);
+    });
   }
 
   postQuestion(dataObj) {
