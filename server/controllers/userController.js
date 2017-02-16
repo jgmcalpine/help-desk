@@ -14,10 +14,9 @@ function addUser(req, res) {
     Models.Users.create({
       username: req.body.username,
       password: req.body.password,
-      profile: req.body.profile,
+      profileId: req.body.profile,
     });
-    res.cookie('user', req.body.username); // need to make this more secure
-    res.json({ status: 'success', username: req.body.username }); // need to add sessions
+    res.json({ status: 'success', username: req.body.username, profileId: req.body.profile }); // need to add sessions
   }
 }
 

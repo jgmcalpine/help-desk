@@ -38,8 +38,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/signup', userCtrl.addUser);
 app.post('/login', userCtrl.verifyUser);
 
-app.post('/users', userCtrl.addUser);
-app.get('/users', userCtrl.getUsers);
+// app.post('/users', userCtrl.addUser);
+// app.get('/users', userCtrl.getUsers);
 
 app.get('/questions', questionCtrl.getQuestions);
 app.post('/questions', questionCtrl.addQuestion);

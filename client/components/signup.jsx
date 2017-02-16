@@ -6,6 +6,7 @@ import {Link} from 'react-router';
 export default class Signup extends React.Component {
     constructor(props) {
         super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleClick(e) {
@@ -14,7 +15,21 @@ export default class Signup extends React.Component {
       console.log(profileChoice);
       document.getElementById('profileField').value = profileChoice;
     }
-    
+
+    handleSubmit(e) {
+      e.preventDefault();
+      const username = e.target.username.value;
+      const password = e.target.password.value;
+      const profile = e.target.options.value;
+        const dataToSend = {
+          username,
+          password,
+          profile: profile,
+        }
+      console.log('handling submit', dataToSend);
+      this.props.handleSignUp(dataToSend);
+    }
+
     render() {
         return (
             <div className="container">
@@ -25,7 +40,7 @@ export default class Signup extends React.Component {
                                 <h1 className="panel-title">Help Desk - SignUp</h1>
                             </div>
                             <div className="panel-body">
-                                <form role="form" id="login-form" onSubmit={this.props.handleSignUp}>
+                                <form role="form" id="login-form" onSubmit={this.handleSubmit}>
                                     <input type="hidden" id="profileField" value="" />
                                     <fieldset>
                                         <div className="form-group">
@@ -37,9 +52,13 @@ export default class Signup extends React.Component {
                                         <div className="form-group">
                                             <input name="confirm_password" className="form-control" placeholder="Confirm password" onChange={this.handleChange} />
                                         </div>
-                                        <div className="btn-group form-group" role="group">
-                                          <button data-value="1" type="button" className="btn btn-default" onClick={this.handleClick} >Client</button>
-                                          <button data-value="2" type="button" className="btn btn-default" onClick={this.handleClick} >Instructor</button>
+                                        <div className="btn-group" data-toggle="buttons">
+                                          <label className="btn btn-primary active">
+                                            <input type="radio" value="1" name="options" id="1" autoComplete="off" /> User
+                                          </label>
+                                          <label className="btn btn-primary">
+                                            <input type="radio" value="2" name="options" id="2" autoComplete="off" /> Admin
+                                          </label>
                                         </div>
                                         <button type="submit" className="btn btn-primary btn-block form-group">Create account</button>
                                     </fieldset>

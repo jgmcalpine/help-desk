@@ -16,7 +16,7 @@ export default class QuestionAction extends React.Component {
     const status = this.props.status;
     let actionComponent = null;
     if (status === 1 || status === 3) {
-        actionComponent = <QuestionActionResponse />;
+        actionComponent = <QuestionActionResponse handleResponsePost={this.props.handleResponsePost}/>;
     }
     if (status === 2) {
         actionComponent = <QuestionActionChangeStatus />;
