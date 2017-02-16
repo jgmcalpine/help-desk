@@ -17,8 +17,9 @@ export default class App extends React.Component {
     this.state = {
       userId: null,
       userName: null,
+      profile: null,
       questions: {},
-      answers: {},
+      responses: {},
       questionsStatus: [
         {id: 1, name: 'Opened'},
         {id: 2, name: 'Pending'},
@@ -33,25 +34,6 @@ export default class App extends React.Component {
     this.handleResponsePost = this.handleResponsePost.bind(this);
   }
 
-  handleSignUp (event) {
-    event.preventDefault();
-    const username = event.target.username.value;
-    const password = event.target.password.value;
-    const profile = event.target.profileField.value;
-    $.ajax({
-      url: '/signup/',
-      type: 'POST',
-      data: JSON.stringify({ username, password, profile }),
-      contentType: 'application/json; charset=utf-8',
-      success: (data) => {
-        if (data.status === 'success') {
-          this.setState({ userName: data.username });
-          browserHistory.push('/main_page');
-        }
-      }
-    });
-  };
-
   handleLogIn(e) {
     e.preventDefault();
     const username = e.target.username.value;
@@ -59,7 +41,7 @@ export default class App extends React.Component {
     $.ajax({ 
       url: '/login/',
       type: 'POST',
-      data: JSON.stringify({username, password}),
+      data: JSON.stringify({ username, password }),
       contentType: "application/json; charset=utf-8",
     })
     .done((data) => {
@@ -76,6 +58,29 @@ export default class App extends React.Component {
     })
     .fail(function() {
       alert("error");
+    })
+  };
+
+  handleSignUp (dataObj) {
+    console.log('in handle signup');
+    console.log(dataObj);
+    $.ajax({
+      url: '/signup/',
+      type: 'POST',
+      data: JSON.stringify(dataObj),
+      contentType: 'application/json; charset=utf-8',
+    })
+    .done((data) => {
+      console.log('done with ajax call', data);
+      let username = this.state.username;
+      let password = this.state.password;
+      let profile = this.state.profile;
+      this.setState({ username, password, profile }, () => {
+        browserHistory.push('/dashboard');
+      });
+    })
+    .fail(function() {
+      alert('error with the sign up request');
     })
   };
 
@@ -114,20 +119,19 @@ export default class App extends React.Component {
     })
   };
 
-  handleResponsePost(event) {
-    console.log('lets be sure');
-    event.preventDefault;
-    const response = event.target.response.value;
+  handleResponsePost(dataObj) {
     $.ajax({
       url: '/responses/',
       type: 'POST',
       data: JSON.stringify(dataObj),
       contentType: 'application/json; charset=utf-8',
-      success: (data) => {
-        if (data.status === 'success') {
-          this.setState({ responses: data.responses });
-        }
-      }
+    })
+    .done((data) => {
+      let responses = this.state.responses;
+      this.setState({ responses });
+    })
+    .fail(function() {
+      alert('error with the ajax post request');
     })
   }
 
@@ -141,6 +145,7 @@ export default class App extends React.Component {
           postQuestion: this.postQuestion,
           handleLogIn: this.handleLogIn,
           handleResponsePost: this.handleResponsePost,
+          handleSignUp: this.handleSignUp,
         })}
       </div>
     );

@@ -36,7 +36,7 @@ export default class Question extends React.Component {
               <ul className="list-group">
                 {responses}
               </ul>
-              <QuestionAction status={this.props.data.questionStatusId} />
+              <QuestionAction status={this.props.data.status.id} handleResponsePost={this.props.handleResponsePost} />
             </div>
           </div>
         </div>

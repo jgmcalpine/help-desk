@@ -6,14 +6,15 @@ export default class NewQuestion extends React.Component {
       this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(e) {
+	handleSubmit(e) {
       e.preventDefault();
+      console.log(e.target)
       const question = e.target.question.value;
       if (!question) return;
       const dataToSend = {
           userId: this.props.mainState.userId,
           question: question
-      }
+      };
       e.target.question.value = '';
       this.props.postQuestion(dataToSend);
   }
