@@ -35,6 +35,18 @@ describe('Route integration', () => {
           .expect(200, done);
       });
 
+    describe('/users', () => {
+      describe('POST', () => {
+        it('respond with json', function(done){
+          // the request-object is the supertest top level api
+          request(HOST)
+            .post('/user')
+            .expect('Content-Type', /json/)
+            .expect(200, done); 
+        });
+      });
+    });
+
       // it('games from appropriate json file in server/db/ are in body of response', done => {
       //   // You'll need to inspect the body of the response and ensure it contains the games list.
       //   // Might need to read the games json file in first to make sure the games in the response
