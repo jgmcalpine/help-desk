@@ -6,39 +6,48 @@ import NewQuestion from './newquestion.jsx';
 export default class Dashboard extends React.Component {
   constructor(props) {
     super(props);
+    this.props.getQuestions();
   }
 
   render() {
-    const filtered1 = Object.values(this.props.getQuestions()).filter((question) => {
-      return question.status.id === 1;
-    });
-    const filtered2 = Object.values(this.props.getQuestions()).filter((question) => {
-      return question.status.id === 2;
-    });
-    const filtered3 = Object.values(this.props.getQuestions()).filter((question) => {
-      return question.status.id === 3;
-    });
-    const filtered4 = Object.values(this.props.getQuestions()).filter((question) => {
-      return question.status.id === 4;
-    });
-
-    let arr1 = [];
+    const questions = this.props.mainState.questions;
+    let arr1 = []; 
     let arr2 = [];
     let arr3 = [];
     let arr4 = [];
 
-    filtered1.forEach((question, idx) => {
-      arr1.push(<Question key={question.id} status={1} data={question} handleResponsePost={this.props.handleResponsePost} />);
-    });
-    filtered2.forEach((question, idx) => {
-      arr2.push(<Question key={question.id} status={2} data={question} handleResponsePost={this.props.handleResponsePost} />);
-    });
-    filtered3.forEach((question, idx) => {
-      arr3.push(<Question key={question.id} status={3} data={question} handleResponsePost={this.props.handleResponsePost} />);
-    });
-    filtered4.forEach((question, idx) => {
-      arr4.push(<Question key={question.id} status={4} data={question} handleResponsePost={this.props.handleResponsePost} />);
-    });
+    if (Object.keys(questions).length > 0) {
+
+      const filtered1 = Object.values(questions).filter((question) => {
+        return question.questionStatusId === 1;
+      });
+      const filtered2 = Object.values(questions).filter((question) => {
+        return question.questionStatusId === 2;
+      });
+      const filtered3 = Object.values(questions).filter((question) => {
+        return question.questionStatusId === 3;
+      });
+      const filtered4 = Object.values(questions).filter((question) => {
+        return question.questionStatusId === 4;
+      });
+
+      filtered1.forEach((question, idx) => {
+        arr1.push(<Question key={question.id} status={1} data={question} handleResponsePost={this.props.handleResponsePost} />);
+      });
+      arr1.reverse();
+      filtered2.forEach((question, idx) => {
+        arr2.push(<Question key={question.id} status={2} data={question} handleResponsePost={this.props.handleResponsePost} />);
+      });
+      arr2.reverse();
+      filtered3.forEach((question, idx) => {
+        arr3.push(<Question key={question.id} status={3} data={question} handleResponsePost={this.props.handleResponsePost} />);
+      });
+      arr3.reverse();
+      filtered4.forEach((question, idx) => {
+        arr4.push(<Question key={question.id} status={4} data={question} handleResponsePost={this.props.handleResponsePost} />);
+      });
+      arr4.reverse();
+    }
 
     return (
       <div>
